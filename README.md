@@ -21,7 +21,7 @@ PowerShell script to replicate Mendix cloud database to local Postgres database
 ---
 
 ## Get Mendix API key
- 1. Login to Mendix Developer portal
+ 1. Login to [Mendix Developer portal](https://sprintr.home.mendix.com/link/profilesettings/apikeys)
  2. Click profile image at top > Account settings > API Keys > Create new API key ![](screenshots/Screenshot-MendixAPIKey.png)
  3. Give it a friendly description > Generate API key
  4. Copy the key and paste into the script prompt
