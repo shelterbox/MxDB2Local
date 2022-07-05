@@ -2,8 +2,8 @@
 PowerShell script to replicate Mendix cloud database to local Postgres database
 
 ## Prerequisites
- - Make sure you have [Postgres](https://www.postgresql.org/download/windows/) installed
- - Make sure to add Postgres command line tools to your PATH [(?)](#add-postgres-command-line-tools-to-your-path)
+ - [Postgres](https://www.postgresql.org/download/windows/) installed
+ - Add Postgres command line tools to your PATH [(?)](#add-postgres-command-line-tools-to-your-path)
 
 ## How to use
  1. Run `MxDB2Local.ps1` PowerShell script
