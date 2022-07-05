@@ -122,8 +122,11 @@ while ($snapshot -eq $null) {
     }
 }
 
+# Calculate database name
+$databaseName = "$($app.Name)-$($environment.Mode)".ToLower().Replace(" ", "_");
+
 # Calculate unique name
-$uniqueName = "$($app.Name)_$($environment.Mode)_$(Get-Date -Date $snapshot.created_at -Format "yyyyMMdd_HHmmss")";
+$uniqueName = "$databaseName-$(Get-Date -Date $snapshot.created_at -Format "yyyyMMdd_HHmmss")";
 
 # Calculate file locations
 $originalLocation = Get-Location;
@@ -169,17 +172,14 @@ if (-not (Test-Path -Path $uniqueOutput)) {
 
 # Extract file to unique location
 Write-Host "`nExtracting file to '$uniqueOutput' ...";
-cd $uniqueOutput;
+Set-Location $uniqueOutput;
 tar -xf $fileLocation;
-cd $originalLocation;
-
-# Calculate database name
-$databaseName = "$($app.Name)_$($environment.Mode)".ToLower();
+Set-Location $originalLocation;
 
 # Drop existing database and create new
 Write-Host "`nDropping '$databaseName' DB and creating new ...";
-psql -U $c.PGUSERNAME -w -c "DROP DATABASE IF EXISTS $databaseName;";
-psql -U $c.PGUSERNAME -w -c "CREATE DATABASE $databaseName;";
+psql -U $c.PGUSERNAME -w -c "DROP DATABASE IF EXISTS """"$databaseName"""";";
+psql -U $c.PGUSERNAME -w -c "CREATE DATABASE """"$databaseName"""";";
 
 # Restore backup into SQL database
 Write-Host "`nRestoring to DB '$databaseName' ...";
