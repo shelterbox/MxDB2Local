@@ -123,10 +123,10 @@ while ($snapshot -eq $null) {
 }
 
 # Calculate database name
-$databaseName = "$($app.Name)-$($environment.Mode)".ToLower().Replace(" ", "_");
+$databaseName = "$($app.Name)$($environment.Mode)".ToLower().Replace(" ", "");
 
 # Calculate unique name
-$uniqueName = "$databaseName-$(Get-Date -Date $snapshot.created_at -Format "yyyyMMdd_HHmmss")";
+$uniqueName = "$databaseName$(Get-Date -Date $snapshot.created_at -Format "yyyyMMddHHmmss")";
 
 # Calculate file locations
 $originalLocation = Get-Location;
@@ -178,10 +178,11 @@ Set-Location $originalLocation;
 
 # Drop existing database and create new
 Write-Host "`nDropping '$databaseName' DB and creating new ...";
-psql -U $c.PGUSERNAME -w -c "DROP DATABASE IF EXISTS """"$databaseName"""";";
-psql -U $c.PGUSERNAME -w -c "CREATE DATABASE """"$databaseName"""";";
+psql -U $c.PGUSERNAME -w -c "DROP DATABASE IF EXISTS ""$databaseName"";";
+psql -U $c.PGUSERNAME -w -c "CREATE DATABASE ""$databaseName"";";
 
 # Restore backup into SQL database
 Write-Host "`nRestoring to DB '$databaseName' ...";
 pg_restore -U $c.PGUSERNAME -O -w -d "$databaseName" "$uniqueOutput\db\db.backup";
 Write-Host "Done"
+Read-Host "Press enter to finish..."
